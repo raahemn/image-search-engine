@@ -2,8 +2,8 @@ from typing import Union
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from google.cloud import storage, firestore
 from starlette import status
-from utils import is_image
 import os
+from utils import is_image, generate_unique_filename
 
 #Initialize Google Cloud Storage client
 storage_client = storage.Client()
@@ -33,6 +33,9 @@ async def upload_image(file: UploadFile = File(...)):
     
     #Upload the image to Google Cloud Storage
     bucket = storage_client.bucket(bucket_name)
+    
+    # Generate a unique filename if the file already exists
+    filename = generate_unique_filename(filename, bucket)
     
     #Create a blob object
     blob = bucket.blob(filename)
