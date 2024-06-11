@@ -16,7 +16,7 @@ firestore_client = firestore.Client()
 router = APIRouter()
 
 #Upload Image API
-@router.post("/upload/")
+@router.post("/")
 async def upload_image(file: UploadFile = File(...)):
     
     if not is_image(file.filename):     #Check if the file is an image

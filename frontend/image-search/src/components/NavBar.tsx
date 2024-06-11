@@ -17,11 +17,12 @@ const NavBar = () => {
     };
   
     return (
-      <nav className={`bg-${isDarkMode ? 'gray-700' : 'gray-200'} p-4 flex justify-between items-center`}>
-        <h1 className={`text-${isDarkMode ? 'white' : 'gray-700'} text-lg font-bold`}>Image Search Engine</h1>
+      <nav className="p-4 flex justify-between items-center bg-gray-200 dark:bg-gray-900">
+
+        <h1 className="dark:text-white text=gray-700 text-lg font-bold">Image Search Engine</h1>
         <button
           onClick={toggleDarkMode}
-          className={`bg-${isDarkMode ? 'gray-200 dark:bg-gray-700' : 'gray-800'} ${isDarkMode ? 'text-gray-800 dark:text-gray-200' : 'text-white'} px-4 py-2 rounded`}
+          className={`dark:bg-gray-200 bg-gray-700 dark:text-gray-900 text-white px-4 py-2 rounded`}
         >
           Toggle Dark Mode
         </button>
