@@ -4,7 +4,7 @@ from models.user_models import SignupUser, LoginUser
 from google.cloud import firestore
 from passlib.context import CryptContext
 from jose import jwt
-from fastapi.responses import JSONResponse, Response
+from fastapi.responses import JSONResponse
 from datetime import datetime, timedelta, timezone
 from dotenv import load_dotenv
 import os

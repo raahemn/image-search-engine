@@ -1,5 +1,6 @@
 import os 
 
+
 #Check if the provided file is an image
 def is_image(filename: str) -> bool:
     allowed_extensions = {'jpg', 'jpeg', 'png', 'gif'}
@@ -20,3 +21,4 @@ def generate_unique_filename(filename: str, bucket):
         suffix += 1
     
     return new_filename
+

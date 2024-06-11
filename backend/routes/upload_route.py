@@ -5,6 +5,8 @@ from starlette import status
 import os
 from utils import is_image, generate_unique_filename
 from middleware.authenticate_user import authenticate_user
+from pinecone_utils import initialize_pinecone
+from embeddings import generate_embeddings
 
 #Initialize Google Cloud Storage client
 storage_client = storage.Client()
@@ -12,6 +14,9 @@ bucket_name = os.getenv("BUCKET_NAME")
 
 #Initialize Firestore client
 firestore_client = firestore.Client()
+
+#Initialize pinecone index
+pc, index = initialize_pinecone()
 
 #Create a router
 router = APIRouter()
@@ -38,12 +43,28 @@ async def upload_image(username:str = Depends(authenticate_user) ,file: UploadFi
     # Generate a unique filename if the file already exists
     filename = generate_unique_filename(filename, bucket)
     
+    #Create Embeddings
+    embeddings = generate_embeddings(contents)
+    
+    #Store embeddings in Pinecone index
+    index.upsert(
+        vectors=[{
+            "id": filename,  #Use filename as the unique identifier for the vector
+            "values": embeddings.tolist(),
+            "metadata": {
+                "user": username,
+                "filename": file.filename,
+                "uploaded_at": firestore.SERVER_TIMESTAMP
+            }
+        }],
+        namespace="image_embeddings"  #Namespace for storing image embeddings
+    )
+    
     #Create a blob object
     blob = bucket.blob(filename)
     
     #Upload the file contents to the blob
     blob.upload_from_string(contents)
-    
     
     #Store metadata in Firestore in the images collection
     doc_ref = firestore_client.collection("images").document()
