@@ -12,10 +12,13 @@ const Home = () => {
     const searchImage = () => {
         navigate("/search-image");
     };
+    
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/login");
+    }
 
-    // useEffect(() => {
-    //     document.documentElement.classList.remove("dark");
-    // }, []);
+
 
     return (
         <div className="min-h-screen flex flex-col items-center justify-center dark:bg-gray-900 dark:text-white">
@@ -31,6 +34,12 @@ const Home = () => {
                     className="btn btn-info btn-md p-2 hover:scale-105 transform transition mt-2 bg-gray-100 text-black dark:bg-blue-500 dark:text-white rounded-lg"
                 >
                     Search Image
+                </button>
+                <button
+                    onClick={handleLogout}
+                    className="btn btn-info btn-md p-2 hover:scale-105 transform transition mt-2 bg-gray-100 text-black dark:bg-blue-500 dark:text-white rounded-lg"
+                >
+                    Logout
                 </button>
             </div>
         </div>

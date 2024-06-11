@@ -20,9 +20,8 @@ const LoginForm: React.FC = () => {
             });
 
             console.log(response.data)
-
-
-            navigate("/");
+            localStorage.setItem("token", response.data.token);
+            navigate("/home");
         } catch (error:any) {
             console.log(error);
         }

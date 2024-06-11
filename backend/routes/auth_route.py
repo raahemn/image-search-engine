@@ -6,11 +6,17 @@ from passlib.context import CryptContext
 from jose import jwt
 from fastapi.responses import JSONResponse, Response
 from datetime import datetime, timedelta, timezone
+from dotenv import load_dotenv
+import os
+
+
+#Load environment variables from .env file
+load_dotenv()
 
 router = APIRouter()
 
-SECRET_KEY = "your-secret-key" 
-ALGORITHM = "HS256"
+SECRET_KEY = os.getenv("SECRET_KEY")
+ALGORITHM = os.getenv("ALGORITHM")
 
 #Firestore client setup
 db = firestore.Client()
