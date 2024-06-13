@@ -30,9 +30,17 @@ const ViewImages = () => {
                     console.log("error", response.data.message);
                     setError(response.data.message);
                 }
-            } catch (err) {
-                setError("Failed to fetch images");
-                console.error(err);
+            } catch (error:any) {
+                if (error.response) {
+                    if (error.response.status === 401) {
+                        setError("Unauthorized. Please log in again.");
+                        alert("Your session has expired. Please login again.")
+                    } else {
+                        setError("An error occurred. Please try again.");
+                    }
+                } else {
+                    setError("An error occurred. Please try again.");
+                }
             } finally {
                 setLoading(false);
             }

@@ -11,16 +11,25 @@ const Upload = () => {
         formData.append("file", file);
 
         try {
-            const response = await axios.post("/api/upload/", formData, {         
+            const response = await axios.post("/api/upload/", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },
             });
-            console.log("response", response)
+            console.log("response", response);
             setMessage(response.data.message);
-        } catch (error:any) {
-            setMessage(error);
+        } catch (error: any) {
+            if (error.response) {
+                if (error.response.status === 401) {
+                    setMessage("Unauthorized. Please log in again.");
+                    alert("Your session has expired. Please login again.");
+                } else {
+                    setMessage("An error occurred. Please try again.");
+                }
+            } else {
+                setMessage("An error occurred. Please try again.");
+            }
         }
     };
 
@@ -48,8 +57,6 @@ const Upload = () => {
             {message && <p className="mt-4 text-center">{message}</p>}
         </div>
     );
-
-   
 };
 
 export default Upload;

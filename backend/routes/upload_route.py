@@ -66,10 +66,6 @@ async def upload_image(username:str = Depends(authenticate_user) ,file: UploadFi
     #Upload the file contents to the blob
     blob.upload_from_string(contents)
     
-    #Generate a signed URL for the image
-    # signed_url = blob.generate_signed_url(
-    #     expiration=datetime.timedelta(minutes=60)
-    # )
     
     #Store metadata in Firestore in the images collection
     doc_ref = firestore_client.collection("images").document()
