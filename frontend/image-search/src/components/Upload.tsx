@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useDropzone } from "react-dropzone";
 
@@ -36,6 +36,16 @@ const Upload = () => {
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
     });
+
+    useEffect(() => {
+        if (message) {
+            const timer = setTimeout(() => {
+                setMessage("");
+            }, 3000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [message]);
 
     return (
         <div className="max-w-md mx-auto p-6 bg-gray-200 rounded-lg shadow-md mt-7">

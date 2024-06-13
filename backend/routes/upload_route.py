@@ -43,14 +43,11 @@ async def upload_image(username:str = Depends(authenticate_user) ,file: UploadFi
     # Generate a unique filename if the file already exists
     filename = generate_unique_filename(filename, bucket)
     
-    
-    
     #Create a blob object
     blob = bucket.blob(filename)
     
     #Upload the file contents to the blob
     blob.upload_from_string(contents)
-    
     
     #Store metadata in Firestore in the images collection
     doc_ref = firestore_client.collection("images").document()

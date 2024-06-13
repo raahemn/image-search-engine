@@ -67,7 +67,8 @@ async def search_similar_images(username:str = Depends(authenticate_user), file:
             similar_images_metadata.append({
             "filename": image_data.get("filename"),
             "url": image_data.get("url"),
-            "uploaded_at": image_data.get("uploaded_at")
+            "uploaded_at": image_data.get("uploaded_at"),
+            "similarity_score": match.score
             })
     
     print("returning",similar_images_metadata)

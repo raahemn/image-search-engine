@@ -19,7 +19,6 @@ const Home = () => {
     }
 
 
-
     return (
         <div className="min-h-screen flex flex-col items-center justify-center dark:bg-gray-900 dark:text-white">
             <div className="flex flex-col items-center space-y-4 mt-4">

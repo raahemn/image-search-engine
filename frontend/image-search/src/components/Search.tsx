@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useDropzone } from "react-dropzone";
 
@@ -6,6 +6,7 @@ interface ImageData {
     filename: string;
     url: string;
     uploaded_at: string;
+    similarity_score: any;
 }
 
 const Search = () => {
@@ -34,7 +35,7 @@ const Search = () => {
             if (error.response) {
                 if (error.response.status === 401) {
                     setMessage("Unauthorized. Please log in again.");
-                    alert("Your session has expired. Please login again.")
+                    alert("Your session has expired. Please login again.");
                 } else {
                     setMessage("An error occurred. Please try again.");
                 }
@@ -47,6 +48,16 @@ const Search = () => {
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
     });
+
+    useEffect(() => {
+        if (message) {
+            const timer = setTimeout(() => {
+                setMessage("");
+            }, 5000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [message]);
 
     return (
         <>
@@ -88,6 +99,9 @@ const Search = () => {
                                     {new Date(
                                         image.uploaded_at
                                     ).toLocaleString()}
+                                </p>
+                                <p className="text-xs text-gray-600">
+                                    Similarity Score: {image.similarity_score.toFixed(3)}
                                 </p>
                             </div>
                         </div>
