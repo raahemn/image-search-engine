@@ -11,7 +11,7 @@ const Upload = () => {
         formData.append("file", file);
 
         try {
-            const response = await axios.post("/api/upload/", formData, {          //try doing this with /api/ later
+            const response = await axios.post("/api/upload/", formData, {         
                 headers: {
                     "Content-Type": "multipart/form-data",
                     Authorization: `Bearer ${localStorage.getItem("token")}`,

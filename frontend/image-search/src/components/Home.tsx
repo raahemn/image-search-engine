@@ -36,6 +36,12 @@ const Home = () => {
                     Search Image
                 </button>
                 <button
+                    onClick={()=>{navigate("/view-images")}}
+                    className="btn btn-info btn-md p-2 hover:scale-105 transform transition mt-2 bg-gray-100 text-black dark:bg-blue-500 dark:text-white rounded-lg"
+                >
+                    View Images
+                </button>
+                <button
                     onClick={handleLogout}
                     className="btn btn-info btn-md p-2 hover:scale-105 transform transition mt-2 bg-gray-100 text-black dark:bg-blue-500 dark:text-white rounded-lg"
                 >

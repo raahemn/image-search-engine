@@ -19,5 +19,5 @@ async def authenticate_user(credentials: HTTPAuthorizationCredentials = Depends(
         username: str = payload.get("username")
         return username
     
-    except jwt.JWTError:
+    except jwt.PyJWTError:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")

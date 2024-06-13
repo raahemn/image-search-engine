@@ -1,4 +1,3 @@
-from typing import Union
 from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
 from google.cloud import storage, firestore
 from starlette import status
@@ -7,6 +6,7 @@ from utils import is_image, generate_unique_filename
 from middleware.authenticate_user import authenticate_user
 from pinecone_utils import initialize_pinecone
 from embeddings import generate_embeddings
+import datetime
 
 #Initialize Google Cloud Storage client
 storage_client = storage.Client()
@@ -49,12 +49,12 @@ async def upload_image(username:str = Depends(authenticate_user) ,file: UploadFi
     #Store embeddings in Pinecone index
     index.upsert(
         vectors=[{
-            "id": filename,  #Use filename as the unique identifier for the vector
+            "id": filename,     #Ive already made the filenames unique
             "values": embeddings.tolist(),
             "metadata": {
-                "user": username,
+                "user": username,       #Username of the user who uploaded the image
                 "filename": file.filename,
-                "uploaded_at": firestore.SERVER_TIMESTAMP
+                "uploaded_at": datetime.datetime.now().isoformat()
             }
         }],
         namespace="image_embeddings"  #Namespace for storing image embeddings
@@ -66,6 +66,11 @@ async def upload_image(username:str = Depends(authenticate_user) ,file: UploadFi
     #Upload the file contents to the blob
     blob.upload_from_string(contents)
     
+    #Generate a signed URL for the image
+    # signed_url = blob.generate_signed_url(
+    #     expiration=datetime.timedelta(minutes=60)
+    # )
+    
     #Store metadata in Firestore in the images collection
     doc_ref = firestore_client.collection("images").document()
 
@@ -75,7 +80,7 @@ async def upload_image(username:str = Depends(authenticate_user) ,file: UploadFi
         "user": user_ref,    #Reference to the user document
         "filename": filename,
         "bucket": bucket_name,
-        "url": f"gs://{bucket_name}/{filename}",
+        "url": f"https://storage.googleapis.com/{bucket_name}/{filename}",
         "uploaded_at": firestore.SERVER_TIMESTAMP
     })
     

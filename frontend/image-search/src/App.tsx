@@ -5,7 +5,9 @@ import Upload from "./components/Upload";
 import NavBar from "./components/NavBar";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import ViewImages from "./components/ViewImages";
 import AuthorizedRoute from "./context/AuthroizedRoute";
+
 
 function App() {
     return (
@@ -17,6 +19,7 @@ function App() {
                         <Route path="/home" element={<Home />} />
                         <Route path="/upload-image" element={<Upload />} />
                         <Route path="/search-image" element={<Search />} />
+                        <Route path="/view-images" element={<ViewImages />} />
                     </Route>
 
                     <Route path="/login" element={<Login />} />

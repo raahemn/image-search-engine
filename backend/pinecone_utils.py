@@ -14,7 +14,7 @@ def initialize_pinecone():
     if index_name not in pc.list_indexes().names():
         pc.create_index(
             name=index_name,
-            dimension=8, 
+            dimension=1000, 
             metric="cosine", 
             spec=ServerlessSpec(
                 cloud="aws",
@@ -22,6 +22,6 @@ def initialize_pinecone():
             ) 
         )
     
-    index = pc.index(index_name)
+    index = pc.Index(index_name)
     
     return pc, index
