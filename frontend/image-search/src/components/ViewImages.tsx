@@ -69,7 +69,9 @@ const ViewImages = () => {
         <div className="container mx-auto p-4">
             <h1 className="text-2xl font-bold mb-4">User Uploaded Images</h1>
             <div className="flex flex-wrap -mx-2">
-                {images.map((image) => (
+                {images.length===0? 
+                    <div className="w-full text-center">No images found</div>
+                : images.map((image) => (
                     <div key={image.filename} className="w-1/4 px-2 mb-4">
                         <div className="bg-white p-4 rounded-lg shadow">
                             <img

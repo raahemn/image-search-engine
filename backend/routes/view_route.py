@@ -43,12 +43,6 @@ async def get_user_images(username: str = Depends(authenticate_user)):
             "uploaded_at": image_data.get("uploaded_at")
         })
     
-    if not images:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="No images found for the user"
-        )
-    
     print("Images", images)
     
     return {"success":True, "images": images}

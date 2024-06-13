@@ -43,22 +43,7 @@ async def upload_image(username:str = Depends(authenticate_user) ,file: UploadFi
     # Generate a unique filename if the file already exists
     filename = generate_unique_filename(filename, bucket)
     
-    #Create Embeddings
-    embeddings = generate_embeddings(contents)
     
-    #Store embeddings in Pinecone index
-    index.upsert(
-        vectors=[{
-            "id": filename,     #Ive already made the filenames unique
-            "values": embeddings.tolist(),
-            "metadata": {
-                "user": username,       #Username of the user who uploaded the image
-                "filename": file.filename,
-                "uploaded_at": datetime.datetime.now().isoformat()
-            }
-        }],
-        namespace="image_embeddings"  #Namespace for storing image embeddings
-    )
     
     #Create a blob object
     blob = bucket.blob(filename)
@@ -69,6 +54,10 @@ async def upload_image(username:str = Depends(authenticate_user) ,file: UploadFi
     
     #Store metadata in Firestore in the images collection
     doc_ref = firestore_client.collection("images").document()
+    
+    #Get the automatically generated ID
+    generated_id = doc_ref.id
+    print(f"Generated document ID: {generated_id}")
 
     user_ref = firestore_client.collection("users").document(username)      #Get the user document
     
@@ -79,6 +68,23 @@ async def upload_image(username:str = Depends(authenticate_user) ,file: UploadFi
         "url": f"https://storage.googleapis.com/{bucket_name}/{filename}",
         "uploaded_at": firestore.SERVER_TIMESTAMP
     })
+    
+    #Create Embeddings
+    embeddings = generate_embeddings(contents)
+    
+    #Store embeddings in Pinecone index
+    index.upsert(
+        vectors=[{
+            "id": generated_id,     
+            "values": embeddings.tolist(),
+            "metadata": {
+                "user": username,       #Username of the user who uploaded the image
+                "filename": file.filename,
+                "uploaded_at": datetime.datetime.now().isoformat()
+            }
+        }],
+        namespace="image_embeddings"  #Namespace for storing image embeddings
+    )
     
     #Return a response
     return {"filename": filename, "message": "Image uploaded and metadata stored successfully"}

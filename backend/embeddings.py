@@ -22,7 +22,7 @@ def generate_embeddings(image_bytes):
      ])
      
      #Load image from bytes
-     image = Image.open(io.BytesIO(image_bytes))
+     image = Image.open(io.BytesIO(image_bytes)).convert("RGB") 
      #Apply transformations
      image = transform(image).unsqueeze(0)  
      
