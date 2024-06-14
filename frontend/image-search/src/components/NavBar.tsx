@@ -1,34 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import {
+    AppBar,
+    Toolbar,
+    Typography,
+    Button,
+    IconButton,
+    Switch,
+    useTheme,
+} from "@mui/material";
+import { Brightness4, Brightness7 } from "@mui/icons-material";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
 
+const NavBar = ({ toggleDarkMode }: { toggleDarkMode: any }) => {
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(true); 
+  const theme = useTheme();
 
-const NavBar = () => {
-    const [isDarkMode, setIsDarkMode] = useState(true);
+ 
+  return (
+      <AppBar position="static" color={isDarkMode ? "default" : "primary"}>
+          <Toolbar>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                  Image Search Engine
+              </Typography>
+              <IconButton onClick={toggleDarkMode} color="inherit">
+                    {theme.palette.mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
+                </IconButton>
+             
+          </Toolbar>
+      </AppBar>
+  );
+};
 
-    useEffect(() => {
-      if (isDarkMode) {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
-    }, [isDarkMode]);
-  
-    const toggleDarkMode = () => {
-      setIsDarkMode(!isDarkMode);
-    };
-  
-    return (
-      <nav className="p-4 flex justify-between items-center bg-gray-200 dark:bg-gray-900">
-
-        <h1 className="dark:text-white text=gray-700 text-lg font-bold">Image Search Engine</h1>
-        <button
-          onClick={toggleDarkMode}
-          className={`dark:bg-gray-200 bg-gray-700 dark:text-gray-900 text-white px-4 py-2 rounded`}
-        >
-          Toggle Dark Mode
-        </button>
-      </nav>
-    );
-    
-}
-
-export default NavBar
+export default NavBar;

@@ -2,9 +2,16 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Container, TextField, Button, Typography, Box, IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+
+
 
 const Signup = () => {
     const navigate = useNavigate();
+
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const handleSignup = async (e: any) => {
         e.preventDefault();
@@ -43,81 +50,102 @@ const Signup = () => {
     };
 
     return (
-        <div className="max-w-md mx-auto my-10 p-6 bg-white shadow-md rounded-md">
-            <h1 className="text-2xl font-semibold mb-4">Sign Up</h1>
-            <form onSubmit={handleSignup}>
-                <div className="mb-4">
-                    <label
-                        htmlFor="fullname"
-                        className="block text-sm font-medium text-gray-700"
-                    >
-                        Full Name
-                    </label>
-                    <input
-                        type="text"
-                        id="fullname"
-                        name="fullname"
-                        className="mt-1 p-2 w-full border rounded-md"
-                        required
-                    />
-                </div>
-
-                <div className="mb-4">
-                    <label
-                        htmlFor="username"
-                        className="block text-sm font-medium text-gray-700"
-                    >
-                        Username
-                    </label>
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        className="mt-1 p-2 w-full border rounded-md"
-                        required
-                    />
-                </div>
-
-                <div className="mb-6">
-                    <label
-                        htmlFor="password"
-                        className="block text-sm font-medium text-gray-700"
-                    >
-                        Password
-                    </label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        className="mt-1 p-2 w-full border rounded-md"
-                        required
-                    />
-                </div>
-
-                <div className="mb-6">
-                    <label
-                        htmlFor="confirmpassword"
-                        className="block text-sm font-medium text-gray-700"
-                    >
-                        Confirm Password
-                    </label>
-                    <input
-                        type="password"
-                        id="confirmpassword"
-                        name="confirmpassword"
-                        className="mt-1 p-2 w-full border rounded-md"
-                        required
-                    />
-                </div>
-
-                <button
-                    type="submit"
-                    className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
-                >
+        <Container maxWidth="sm">
+            <Box 
+                sx={{
+                    mt: 10,
+                    p: 6,
+                    boxShadow: 3,
+                    borderRadius: 2,
+                    bgcolor: 'background.paper'
+                }}
+            >
+                <Typography variant="h4" component="h1" gutterBottom>
                     Sign Up
-                </button>
-            </form>
-        </div>
+                </Typography>
+                <form onSubmit={handleSignup}>
+                    <Box sx={{ mb: 3 }}>
+                        <TextField
+                            label="Full Name"
+                            variant="outlined"
+                            fullWidth
+                            name="fullname"
+                            id="fullname"
+                            required
+                        />
+                    </Box>
+                    <Box sx={{ mb: 3 }}>
+                        <TextField
+                            label="Username"
+                            variant="outlined"
+                            fullWidth
+                            name="username"
+                            id="username"
+                            required
+                        />
+                    </Box>
+                    <Box sx={{ mb: 3 }}>
+                        <TextField
+                            label="Password"
+                            variant="outlined"
+                            type={showPassword ? "text" : "password"}
+                            fullWidth
+                            name="password"
+                            id="password"
+                            required
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={()=>{setShowPassword(!showPassword)}}
+                                            edge="end"
+                                        >
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                    </Box>
+                    <Box sx={{ mb: 4 }}>
+                        <TextField
+                            label="Confirm Password"
+                            variant="outlined"
+                            type={showConfirmPassword ? "text" : "password"}
+                            fullWidth
+                            name="confirmpassword"
+                            id="confirmpassword"
+                            required
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle confirm password visibility"
+                                            onClick={()=>{setShowConfirmPassword(!showConfirmPassword)}}
+                                            edge="end"
+                                        >
+                                            {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                    </Box>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        fullWidth
+                    >
+                        Sign Up
+                    </Button>
+                </form>
+                <Typography component="h1" gutterBottom sx={{ mt: 2 }}>
+                    Already have an account? <a href="/login" style={{ color: '#3f51b5', textDecoration: 'none', fontWeight: 'bold' }}>Login</a>
+                </Typography>
+            </Box>
+        </Container>
     );
 };
 

@@ -48,20 +48,17 @@ async def search_similar_images(username:str = Depends(authenticate_user), file:
         }
     )
     
-    print("query_results matches",query_results.matches)
     
     #Fetch metadata for the similar images from Firestore
     similar_images_metadata = []
     for match in query_results.matches:
-        print("match id", match.id)
+       
         doc_ref = firestore_client.collection("images").document(match.id)
         
         doc = doc_ref.get()
         
-        print("doc",doc)
-        
         if doc.exists:
-            print("doc exists")
+            
             image_data = doc.to_dict()
             
             similar_images_metadata.append({
@@ -71,5 +68,4 @@ async def search_similar_images(username:str = Depends(authenticate_user), file:
             "similarity_score": match.score
             })
     
-    print("returning",similar_images_metadata)
     return {"success":True, "message": f'Top {len(similar_images_metadata)} results returned in order of similarity',"images": similar_images_metadata}

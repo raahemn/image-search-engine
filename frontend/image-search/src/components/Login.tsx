@@ -1,9 +1,21 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import {
+    Container,
+    TextField,
+    Button,
+    Typography,
+    Box,
+    IconButton,
+    InputAdornment,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-const LoginForm: React.FC = () => {
+const LoginForm = () => {
     const navigate = useNavigate();
+
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleLogin = async (e: any) => {
         e.preventDefault();
@@ -11,7 +23,6 @@ const LoginForm: React.FC = () => {
         const formData = new FormData(e.target);
         const username = formData.get("username") as string;
         const password = formData.get("password") as string;
-        
 
         try {
             const response = await axios.post("/api/auth/login/", {
@@ -19,57 +30,93 @@ const LoginForm: React.FC = () => {
                 password,
             });
 
-            console.log(response.data)
+            console.log(response.data);
             localStorage.setItem("token", response.data.token);
             navigate("/home");
-        } catch (error:any) {
+        } catch (error: any) {
             console.log(error);
         }
     };
 
     return (
-        <div className="max-w-md mx-auto my-10 p-6 bg-white shadow-md rounded-md">
-            <h1 className="text-2xl font-semibold mb-4">Login</h1>
-            <form onSubmit={handleLogin}>
-                
-                <div className="mb-4">
-                    <label
-                        htmlFor="username"
-                        className="block text-sm font-medium text-gray-700"
-                    >
-                        Username
-                    </label>
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        className="mt-1 p-2 w-full border rounded-md"
-                        required
-                    />
-                </div>
-                <div className="mb-6">
-                    <label
-                        htmlFor="password"
-                        className="block text-sm font-medium text-gray-700"
-                    >
-                        Password
-                    </label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        className="mt-1 p-2 w-full border rounded-md"
-                        required
-                    />
-                </div>
-                <button
-                    type="submit"
-                    className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
-                >
+        <Container maxWidth="sm">
+            <Box
+                sx={{
+                    mt: 10,
+                    p: 6,
+                    boxShadow: 3,
+                    borderRadius: 2,
+                    bgcolor: "background.paper",
+                }}
+            >
+                <Typography variant="h4" component="h1" gutterBottom>
                     Login
-                </button>
-            </form>
-        </div>
+                </Typography>
+                <form onSubmit={handleLogin}>
+                    <Box sx={{ mb: 3 }}>
+                        <TextField
+                            label="Username"
+                            variant="outlined"
+                            fullWidth
+                            name="username"
+                            id="username"
+                            required
+                        />
+                    </Box>
+                    <Box sx={{ mb: 4 }}>
+                        <TextField
+                            label="Password"
+                            variant="outlined"
+                            type={showPassword ? "text" : "password"}
+                            fullWidth
+                            name="password"
+                            id="password"
+                            required
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={() => {
+                                                setShowPassword(!showPassword);
+                                            }}
+                                            edge="end"
+                                        >
+                                            {showPassword ? (
+                                                <VisibilityOff />
+                                            ) : (
+                                                <Visibility />
+                                            )}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                    </Box>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        fullWidth
+                    >
+                        Login
+                    </Button>
+                </form>
+                <Typography component="h1" gutterBottom sx={{ mt: 2 }}>
+                    Don't have an account?{" "}
+                    <a
+                        href="/signup"
+                        style={{
+                            color: "#3f51b5",
+                            textDecoration: "none",
+                            fontWeight: "bold",
+                        }}
+                    >
+                        Sign Up
+                    </a>
+                </Typography>
+            </Box>
+        </Container>
     );
 };
 
