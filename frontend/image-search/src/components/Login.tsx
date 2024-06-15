@@ -102,12 +102,12 @@ const LoginForm = () => {
                         Login
                     </Button>
                 </form>
-                <Typography component="h1" gutterBottom sx={{ mt: 2 }}>
+                <Typography component="h1" gutterBottom sx={{ mt: 2 }} color="primary">
                     Don't have an account?{" "}
                     <a
                         href="/signup"
                         style={{
-                            color: "#3f51b5",
+                            color: "primary",
                             textDecoration: "none",
                             fontWeight: "bold",
                         }}

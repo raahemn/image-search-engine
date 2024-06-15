@@ -71,7 +71,7 @@ const ViewImages = () => {
     return (
         <div className="container mx-auto p-4 mt-8">
             <Typography variant="h4" component="h1" gutterBottom>
-                Your Uploaded Images:
+                Your Images:
             </Typography>
             <div className="flex flex-wrap -mx-2">
                 {images.length === 0 ? (

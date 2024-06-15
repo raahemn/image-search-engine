@@ -2,10 +2,16 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Container, TextField, Button, Typography, Box, IconButton, InputAdornment } from "@mui/material";
+import {
+    Container,
+    TextField,
+    Button,
+    Typography,
+    Box,
+    IconButton,
+    InputAdornment,
+} from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-
-
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -39,9 +45,7 @@ const Signup = () => {
 
             if (response.data.success) {
                 navigate("/login");
-            }
-            else
-            {
+            } else {
                 console.log(response.data.message);
             }
         } catch (error: any) {
@@ -51,13 +55,13 @@ const Signup = () => {
 
     return (
         <Container maxWidth="sm">
-            <Box 
+            <Box
                 sx={{
                     mt: 10,
                     p: 6,
                     boxShadow: 3,
                     borderRadius: 2,
-                    bgcolor: 'background.paper'
+                    bgcolor: "background.paper",
                 }}
             >
                 <Typography variant="h4" component="h1" gutterBottom>
@@ -98,10 +102,16 @@ const Signup = () => {
                                     <InputAdornment position="end">
                                         <IconButton
                                             aria-label="toggle password visibility"
-                                            onClick={()=>{setShowPassword(!showPassword)}}
+                                            onClick={() => {
+                                                setShowPassword(!showPassword);
+                                            }}
                                             edge="end"
                                         >
-                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                            {showPassword ? (
+                                                <VisibilityOff />
+                                            ) : (
+                                                <Visibility />
+                                            )}
                                         </IconButton>
                                     </InputAdornment>
                                 ),
@@ -122,10 +132,18 @@ const Signup = () => {
                                     <InputAdornment position="end">
                                         <IconButton
                                             aria-label="toggle confirm password visibility"
-                                            onClick={()=>{setShowConfirmPassword(!showConfirmPassword)}}
+                                            onClick={() => {
+                                                setShowConfirmPassword(
+                                                    !showConfirmPassword
+                                                );
+                                            }}
                                             edge="end"
                                         >
-                                            {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                                            {showConfirmPassword ? (
+                                                <VisibilityOff />
+                                            ) : (
+                                                <Visibility />
+                                            )}
                                         </IconButton>
                                     </InputAdornment>
                                 ),
@@ -141,8 +159,23 @@ const Signup = () => {
                         Sign Up
                     </Button>
                 </form>
-                <Typography component="h1" gutterBottom sx={{ mt: 2 }}>
-                    Already have an account? <a href="/login" style={{ color: '#3f51b5', textDecoration: 'none', fontWeight: 'bold' }}>Login</a>
+                <Typography
+                    component="h1"
+                    gutterBottom
+                    sx={{ mt: 2 }}
+                    color="primary"
+                >
+                    Already have an account?{" "}
+                    <a
+                        href="/login"
+                        style={{
+                            color: "primary",
+                            textDecoration: "none",
+                            fontWeight: "bold",
+                        }}
+                    >
+                        Login
+                    </a>
                 </Typography>
             </Box>
         </Container>

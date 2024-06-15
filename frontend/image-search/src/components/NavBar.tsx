@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
     AppBar,
     Toolbar,
@@ -8,28 +9,50 @@ import {
     Switch,
     useTheme,
 } from "@mui/material";
-import { Brightness4, Brightness7 } from "@mui/icons-material";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
+import LogoutIcon from "@mui/icons-material/Logout";
+import LoginIcon from "@mui/icons-material/Login";
+import HomeIcon from "@mui/icons-material/Home";
 
-const NavBar = ({ toggleDarkMode }: { toggleDarkMode: any }) => {
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(true); 
-  const theme = useTheme();
+const NavBar = () => {
+    const navigate = useNavigate();
 
- 
-  return (
-      <AppBar position="static" color={isDarkMode ? "default" : "primary"}>
-          <Toolbar>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                  Image Search Engine
-              </Typography>
-              <IconButton onClick={toggleDarkMode} color="inherit">
-                    {theme.palette.mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
-                </IconButton>
-             
-          </Toolbar>
-      </AppBar>
-  );
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/login");
+    };
+
+    return (
+        <AppBar position="static" color="primary">
+            <Toolbar>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    <a
+                        href="/home"
+                        style={{
+                            textDecoration: "none",
+                            fontWeight: "bold",
+                        }}
+                    >
+                        Image Search Engine
+                    </a>
+                </Typography>
+
+                {localStorage.getItem("token") ? (
+                    <>
+                        <IconButton onClick={handleLogout} color="inherit">
+                            <LogoutIcon />
+                        </IconButton>
+                    </>
+                ) : (
+                    <IconButton
+                        onClick={() => navigate("/login")}
+                        color="inherit"
+                    >
+                        <LoginIcon />
+                    </IconButton>
+                )}
+            </Toolbar>
+        </AppBar>
+    );
 };
 
 export default NavBar;

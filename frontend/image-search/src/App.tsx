@@ -8,18 +8,16 @@ import Signup from "./components/Signup";
 import ViewImages from "./components/ViewImages";
 import AuthorizedRoute from "./context/AuthroizedRoute";
 import { ThemeProvider } from "@mui/material/styles";
-import Theme from "./context/Theme";
-
+import theme from "./context/Theme";
 
 function App() {
-    const { theme, toggleDarkMode } = Theme(); 
 
 
     return (
         <>
             <ThemeProvider theme={theme}>
                 <BrowserRouter>
-                    <NavBar toggleDarkMode={toggleDarkMode} />
+                    <NavBar />
                     <Routes>
                         <Route path="/" element={<AuthorizedRoute />}>
                             <Route path="/home" element={<Home />} />

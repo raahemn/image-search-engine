@@ -70,7 +70,10 @@ const Upload: React.FC = () => {
     };
 
     return (
-        <Container maxWidth="sm" sx={{ mt: 7 }}>
+        <Container maxWidth="sm" sx={{ mt: 16 }}>
+            <Typography variant="h4" align="center" color="primary" gutterBottom>
+                Upload Image Below
+            </Typography>
             <Paper elevation={3} sx={{ p: 4, textAlign: "center" }}>
                 <Box
                     {...getRootProps()}
