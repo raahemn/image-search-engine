@@ -32,11 +32,7 @@ async def get_user_images(username: str = Depends(authenticate_user)):
     images = []
     for doc in docs:
         image_data = doc.to_dict()
-        #Generate a signed URL that the user can use to access the images
-        # bucket = storage_client.bucket(bucket_name)
-        # blob = bucket.blob(image_data.get("filename"))
-        # signed_url = blob.generate_signed_url(expiration=datetime.timedelta(minutes=60))
-        
+       
         images.append({
             "filename": image_data.get("filename"),
             "url": image_data.get("url"),

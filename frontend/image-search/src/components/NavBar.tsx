@@ -1,17 +1,7 @@
-import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-    AppBar,
-    Toolbar,
-    Typography,
-    Button,
-    IconButton,
-    Switch,
-    useTheme,
-} from "@mui/material";
+import { AppBar, Toolbar, Typography, IconButton } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
-import HomeIcon from "@mui/icons-material/Home";
 
 const NavBar = () => {
     const navigate = useNavigate();

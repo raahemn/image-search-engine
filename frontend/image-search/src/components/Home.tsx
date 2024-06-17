@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Container, Grid, Typography, Box } from "@mui/material";
 

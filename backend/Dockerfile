@@ -1,4 +1,4 @@
-FROM python:3.12.3
+FROM python:3.12.3-slim
 
 #Set the working directory
 WORKDIR /app
@@ -13,7 +13,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 #Expose the port FastAPI is running on
-EXPOSE 8000
+
+# COPY application_default_credentials.json /app
 
 #Command to run the application
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD uvicorn main:app --host=0.0.0.0 --port=8080

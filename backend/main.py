@@ -6,9 +6,8 @@ from routes.auth_route import router as auth_router
 from routes.search_route import router as search_router
 from routes.view_route import router as view_router
 from fastapi.middleware.cors import CORSMiddleware
-import os
 from pinecone_utils import initialize_pinecone
-
+import os
 
 
 #Load environment variables from .env file
@@ -20,6 +19,8 @@ app = FastAPI()
 
 #Initialize pinecone index
 pc, index = initialize_pinecone()
+
+print("PORT", PORT)
 
 
 #CORS middleware to allow requests from all origins
@@ -54,6 +55,8 @@ app.include_router(view_router, prefix="/api/view")
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="localhost", port=8000)
-    print("Server running on port 8000.")
+    PORT = int(os.getenv("PORT", 8080))
+   
+    uvicorn.run(app, host="localhost", port=PORT)
+    print("Server running on port 8080.")
     

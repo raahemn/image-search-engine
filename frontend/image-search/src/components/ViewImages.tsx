@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Typography, CircularProgress } from "@mui/material";
 
@@ -12,7 +12,6 @@ const ViewImages = () => {
     const [images, setImages] = useState<ImageData[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-  
 
     useEffect(() => {
         const fetchImages = async () => {
