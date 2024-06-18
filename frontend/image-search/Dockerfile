@@ -1,29 +1,23 @@
-# First stage: build the Vite app
-FROM node:18-alpine AS builder
+# Use a newer version of Node.js
+FROM node:18-alpine
 
 # Set the working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json (or yarn.lock)
+# Copy package.json and package-lock.json
 COPY package*.json ./
+
+# Install Vite globally
+# RUN npm install -g vite
 
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the application code into the container
+# Copy the rest of the application code
 COPY . .
 
-# Build the Vite application
-RUN npm run build
+# Expose the port that Vite will run on
+EXPOSE 3000
 
-# Second stage: serve the static files with Nginx
-FROM nginx:alpine
-
-# Copy the built files from the builder stage
-COPY --from=builder /app/dist /usr/share/nginx/html
-
-# Expose the port Nginx is running on
-EXPOSE 80
-
-# Command to run Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Command to run the application
+CMD ["npm", "start"]

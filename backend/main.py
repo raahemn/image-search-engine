@@ -20,7 +20,6 @@ app = FastAPI()
 #Initialize pinecone index
 pc, index = initialize_pinecone()
 
-print("PORT", PORT)
 
 
 #CORS middleware to allow requests from all origins

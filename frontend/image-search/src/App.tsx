@@ -6,19 +6,20 @@ import NavBar from "./components/NavBar";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import ViewImages from "./components/ViewImages";
+import Landing from "./components/Landing";
 import AuthorizedRoute from "./context/AuthroizedRoute";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./context/Theme";
 
 function App() {
-
-
     return (
         <>
             <ThemeProvider theme={theme}>
                 <BrowserRouter>
                     <NavBar />
+
                     <Routes>
+                        <Route path="/" element={<Landing />} />
                         <Route path="/" element={<AuthorizedRoute />}>
                             <Route path="/home" element={<Home />} />
                             <Route path="/upload-image" element={<Upload />} />

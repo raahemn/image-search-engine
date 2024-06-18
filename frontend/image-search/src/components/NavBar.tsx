@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { AppBar, Toolbar, Typography, IconButton } from "@mui/material";
+import { AppBar, Toolbar, Typography, IconButton, Tooltip } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
 
@@ -27,19 +27,20 @@ const NavBar = () => {
                 </Typography>
 
                 {localStorage.getItem("token") ? (
-                    <>
+                <>
+                    <Tooltip title="Logout">
                         <IconButton onClick={handleLogout} color="inherit">
                             <LogoutIcon />
                         </IconButton>
-                    </>
-                ) : (
-                    <IconButton
-                        onClick={() => navigate("/login")}
-                        color="inherit"
-                    >
+                    </Tooltip>
+                </>
+            ) : (
+                <Tooltip title="Login">
+                    <IconButton onClick={() => navigate("/login")} color="inherit">
                         <LoginIcon />
                     </IconButton>
-                )}
+                </Tooltip>
+            )}
             </Toolbar>
         </AppBar>
     );

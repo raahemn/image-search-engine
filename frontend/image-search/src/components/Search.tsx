@@ -35,7 +35,7 @@ const Search = () => {
         formData.append("file", file);
 
         setIsUploading(true); // Start uploading, show CircularProgress
-        setRequested(true);
+        
         try {
             const response = await axios.post("/api/search/", formData, {
                 headers: {
@@ -44,6 +44,7 @@ const Search = () => {
                 },
             });
             console.log("response", response);
+            setRequested(true);
             setMessage(response.data.message);
             if (response.data.success) {
                 setImages(response.data.images);
@@ -183,6 +184,9 @@ const Search = () => {
                                         {new Date(
                                             image.uploaded_at
                                         ).toLocaleString()}
+                                    </p>
+                                    <p className="text-xs text-gray-600">
+                                        Similarity Score: {image.similarity_score.toFixed(2)}
                                     </p>
                                 </div>
                             </div>

@@ -1,0 +1,5 @@
+.env
+
+#ignore dockerfile
+Dockerfile
+*.docker
