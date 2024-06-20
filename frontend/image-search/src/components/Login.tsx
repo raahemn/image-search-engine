@@ -9,6 +9,7 @@ import {
     Box,
     IconButton,
     InputAdornment,
+    CircularProgress,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
@@ -16,9 +17,11 @@ const LoginForm = () => {
     const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const handleLogin = async (e: any) => {
         e.preventDefault();
+        setLoading(true);
 
         const formData = new FormData(e.target);
         const username = formData.get("username") as string;
@@ -36,6 +39,7 @@ const LoginForm = () => {
         } catch (error: any) {
             console.log(error);
         }
+        setLoading(false);
     };
 
     return (
@@ -93,6 +97,17 @@ const LoginForm = () => {
                             }}
                         />
                     </Box>
+                    {loading && (
+                        <Box
+                            sx={{
+                                display: "flex",
+                                justifyContent: "center",
+                                marginBottom: 1,
+                            }}
+                        >
+                            <CircularProgress />
+                        </Box>
+                    )}
                     <Button
                         type="submit"
                         variant="contained"
@@ -102,7 +117,12 @@ const LoginForm = () => {
                         Login
                     </Button>
                 </form>
-                <Typography component="h1" gutterBottom sx={{ mt: 2 }} color="primary">
+                <Typography
+                    component="h1"
+                    gutterBottom
+                    sx={{ mt: 2 }}
+                    color="primary"
+                >
                     Don't have an account?{" "}
                     <a
                         href="/signup"

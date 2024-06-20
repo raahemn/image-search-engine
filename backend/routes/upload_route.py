@@ -5,8 +5,9 @@ import os
 from utils import is_image, generate_unique_filename
 from middleware.authenticate_user import authenticate_user
 from pinecone_utils import initialize_pinecone
-from embeddings import generate_embeddings
 import datetime
+from predict_request_gapic import EmbeddingPredictionClient
+
 
 #Initialize Google Cloud Storage client
 storage_client = storage.Client()
@@ -67,13 +68,20 @@ async def upload_image(username:str = Depends(authenticate_user) ,file: UploadFi
     })
     
     #Create Embeddings
-    embeddings = generate_embeddings(contents)
+    project_id = os.getenv('PROJECT_ID')
+    client = EmbeddingPredictionClient(project=project_id)
+    
+    embedding_response = client.get_embedding(image_bytes=contents)
+    embeddings = embedding_response.image_embedding
+    
+    print("Embeddings generated successfully", embeddings[:5])
+    print("dimension", len(embeddings))
     
     #Store embeddings in Pinecone index
     index.upsert(
         vectors=[{
             "id": generated_id,     
-            "values": embeddings.tolist(),
+            "values": embeddings,
             "metadata": {
                 "user": username,       #Username of the user who uploaded the image
                 "filename": file.filename,

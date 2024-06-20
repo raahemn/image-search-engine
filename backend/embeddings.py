@@ -32,4 +32,46 @@ def generate_embeddings(image_bytes):
           
      return embeddings.squeeze().numpy() 
      
+from google.cloud import firestore
+
+# Initialize Firestore client
+db = firestore.Client()
+
+def delete_user_images_from_firestore(user_id):
+    user_ref = db.collection("users").document(user_id)
+    images_ref = db.collection("images")
     
+    #Query to get images uploaded by the user
+    query = images_ref.where("user", "==", user_ref)
+    docs = query.stream()
+    
+
+    # Delete each document found
+    for doc in docs:
+        doc.reference.delete()
+
+# Example usage
+user_id_to_delete = 'a'
+delete_user_images_from_firestore(user_id_to_delete)
+
+
+from google.cloud import storage
+
+# Initialize Cloud Storage client
+storage_client = storage.Client()
+
+def delete_user_images_from_storage(user_id, bucket_name):
+    bucket = storage_client.bucket(bucket_name)
+    
+    # List all blobs (objects) in the bucket
+    blobs = bucket.list_blobs()
+
+    # Iterate over each blob and delete those that belong to the user
+    for blob in blobs:
+        if user_id in blob.name:
+            blob.delete()
+
+# Example usage
+user_id_to_delete = 'a'
+bucket_name = 'image_store_p1'
+delete_user_images_from_storage(user_id_to_delete, bucket_name)

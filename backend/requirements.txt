@@ -1,3 +1,4 @@
+absl-py==1.4.0
 annotated-types==0.7.0
 anyio==4.4.0
 bcrypt==3.2.0
@@ -15,6 +16,7 @@ filelock==3.14.0
 fsspec==2024.6.0
 google-api-core==2.19.0
 google-auth==2.30.0
+google-cloud-aiplatform==1.25.0
 google-cloud-core==2.4.1
 google-cloud-firestore==2.16.0
 google-cloud-storage==2.16.0
@@ -41,8 +43,8 @@ pillow==10.3.0
 pinecone==4.0.0
 pinecone-client==4.1.1
 pinecone-plugin-interface==0.0.7
-proto-plus==1.23.0
-protobuf
+proto-plus==1.22.2
+protobuf==4.23.0
 protoc-gen-openapiv2==0.0.1
 pyasn1==0.6.0
 pyasn1_modules==0.4.0

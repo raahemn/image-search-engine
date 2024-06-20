@@ -9,6 +9,7 @@ import {
     Box,
     IconButton,
     InputAdornment,
+    CircularProgress,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
@@ -17,9 +18,11 @@ const Signup = () => {
 
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const handleSignup = async (e: any) => {
         e.preventDefault();
+        setLoading(true);
 
         const formData = new FormData(e.target);
         const name = formData.get("fullname") as string;
@@ -50,6 +53,7 @@ const Signup = () => {
         } catch (error: any) {
             console.log(error.response.data.message);
         }
+        setLoading(false);
     };
 
     return (
@@ -149,6 +153,18 @@ const Signup = () => {
                             }}
                         />
                     </Box>
+                    {loading && (
+                        <Box
+                            sx={{
+                                display: "flex",
+                                justifyContent: "center",
+                                marginBottom: 1,
+                            }}
+                        >
+                            <CircularProgress />
+                        </Box>
+                    )}
+
                     <Button
                         type="submit"
                         variant="contained"
