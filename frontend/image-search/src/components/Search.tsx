@@ -35,7 +35,7 @@ const Search = () => {
         formData.append("file", file);
 
         setIsUploading(true); // Start uploading, show CircularProgress
-        
+
         try {
             const response = await axios.post("/api/search/", formData, {
                 headers: {
@@ -59,6 +59,7 @@ const Search = () => {
                     setSnackbarMessage("Unauthorized. Please log in again.");
                     setSnackbarSeverity("error");
                     alert("Your session has expired. Please login again.");
+                    localStorage.removeItem("token");
                 } else {
                     setMessage("An error occurred. Please try again.");
                     setSnackbarMessage("An error occurred. Please try again.");
@@ -156,7 +157,7 @@ const Search = () => {
                 </Typography>
                 <div className="flex flex-wrap -mx-2">
                     {images.length === 0 ? (
-                        requested == true ? (
+                        requested ? (
                             <div className="w-full text-center">
                                 No images found.
                             </div>
@@ -169,7 +170,7 @@ const Search = () => {
                         images.map((image) => (
                             <div
                                 key={image.filename}
-                                className="w-1/4 px-2 mb-4"
+                                className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-2 mb-4"
                             >
                                 <div className="bg-white p-4 rounded-lg shadow">
                                     <img
@@ -177,16 +178,14 @@ const Search = () => {
                                         alt={image.filename}
                                         className="w-full h-auto rounded mb-2"
                                     />
-                                    <p className="text-sm font-semibold">
-                                        {image.filename}
-                                    </p>
                                     <p className="text-xs text-gray-600">
                                         {new Date(
                                             image.uploaded_at
                                         ).toLocaleString()}
                                     </p>
                                     <p className="text-xs text-gray-600">
-                                        Similarity Score: {image.similarity_score.toFixed(2)}
+                                        Similarity Score:{" "}
+                                        {image.similarity_score.toFixed(2)}
                                     </p>
                                 </div>
                             </div>

@@ -39,6 +39,6 @@ async def get_user_images(username: str = Depends(authenticate_user)):
             "uploaded_at": image_data.get("uploaded_at")
         })
     
-    print("Images", images)
+    # print("Images", images)
     
     return {"success":True, "images": images}

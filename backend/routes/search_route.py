@@ -1,12 +1,13 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
 from google.cloud import storage, firestore
 from pinecone_utils import initialize_pinecone
-from embeddings import generate_embeddings
 from middleware.authenticate_user import authenticate_user
 import os
 from dotenv import load_dotenv
 from starlette import status
 from utils import is_image
+from predict_request_gapic import EmbeddingPredictionClient
+
 
 load_dotenv()
 
@@ -34,12 +35,16 @@ async def search_similar_images(username:str = Depends(authenticate_user), file:
     #Read file contents
     contents = await file.read()
     
-    #Generate embeddings for the query image
-    query_embeddings = generate_embeddings(contents)
+    project_id = os.getenv('PROJECT_ID')
+    client = EmbeddingPredictionClient(project=project_id)
+    
+    embedding_response = client.get_embedding(image_bytes=contents)
+
+    query_embeddings = embedding_response.image_embedding
     
     #Perform similarity search in Pinecone
     query_results = index.query(
-        vector=query_embeddings.tolist(),
+        vector=query_embeddings,
         
         top_k=5,  #Number of similar images to retrieve
         namespace="image_embeddings",  

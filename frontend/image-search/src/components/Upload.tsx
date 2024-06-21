@@ -35,6 +35,7 @@ const Upload: React.FC = () => {
                     setSnackbarMessage("Unauthorized. Please log in again.");
                     setSnackbarSeverity("error");
                     alert("Your session has expired. Please login again.");
+                    localStorage.removeItem("token");
                 } else {
                     setMessage("An error occurred. Please try again.");
                     setSnackbarMessage("An error occurred. Please try again.");

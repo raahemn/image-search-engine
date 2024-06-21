@@ -41,8 +41,8 @@ async def upload_image(username:str = Depends(authenticate_user) ,file: UploadFi
     #Upload the image to Google Cloud Storage
     bucket = storage_client.bucket(bucket_name)
     
-    # Generate a unique filename if the file already exists
-    filename = generate_unique_filename(filename, bucket)
+    #Generate a unique filename to prevent overwriting pre-existing images in the bucket
+    filename = generate_unique_filename(filename)
     
     #Create a blob object
     blob = bucket.blob(filename)
@@ -55,7 +55,7 @@ async def upload_image(username:str = Depends(authenticate_user) ,file: UploadFi
     
     #Get the automatically generated ID
     generated_id = doc_ref.id
-    print(f"Generated document ID: {generated_id}")
+    # print(f"Generated document ID: {generated_id}")
 
     user_ref = firestore_client.collection("users").document(username)      #Get the user document
     
@@ -74,8 +74,8 @@ async def upload_image(username:str = Depends(authenticate_user) ,file: UploadFi
     embedding_response = client.get_embedding(image_bytes=contents)
     embeddings = embedding_response.image_embedding
     
-    print("Embeddings generated successfully", embeddings[:5])
-    print("dimension", len(embeddings))
+    # print("Embeddings generated successfully", embeddings[:5])
+    # print("dimension", len(embeddings))
     
     #Store embeddings in Pinecone index
     index.upsert(
