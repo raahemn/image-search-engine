@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-from google.cloud import storage, firestore
 from dotenv import load_dotenv
 from routes.upload_route import router as upload_router
 from routes.auth_route import router as auth_router

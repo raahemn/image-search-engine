@@ -13,4 +13,3 @@ def generate_unique_filename(filename: str):
     unique_id = uuid.uuid4().hex           
     new_filename = f"{base}_{unique_id}{ext}"  
     return new_filename
-

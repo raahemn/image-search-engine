@@ -1,11 +1,9 @@
-from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
+from fastapi import APIRouter, Depends
 from middleware.authenticate_user import authenticate_user
 from google.cloud import storage, firestore
 from middleware.authenticate_user import authenticate_user
 from dotenv import load_dotenv
 import os
-from starlette import status
-import datetime
 
 load_dotenv()
 
