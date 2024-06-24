@@ -161,9 +161,9 @@ jobs:
 
       - name: Deploy to Cloud Run
         run: |
-          gcloud run deploy ${{ env.SERVICE }} \
-            --image ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }} \
-            --region ${{ env.REGION }} \
+          gcloud run deploy imsfrontend \
+            --image gcr.io/jetrr-raahem-nabeel-1/imsfrontendfinal1 \
+            --region us-central1 \
             --platform managed \
             --allow-unauthenticated
 
