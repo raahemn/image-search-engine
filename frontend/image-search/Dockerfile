@@ -7,7 +7,7 @@ WORKDIR /app
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
-RUN npm run build
+
 
 # Install Vite globally
 # RUN npm install -g vite
@@ -15,8 +15,13 @@ RUN npm run build
 # Install dependencies
 RUN npm install
 
+RUN npm install -g typescript
+
+
 # Copy the rest of the application code
 COPY . .
+
+RUN npm run build
 
 # Expose the port that Vite will run on
 EXPOSE 3000
