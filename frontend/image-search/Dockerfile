@@ -1,5 +1,5 @@
 # Use a newer version of Node.js
-FROM node:18
+FROM node:18-alpine
 
 # Set the working directory
 WORKDIR /app
@@ -8,14 +8,8 @@ WORKDIR /app
 COPY package*.json ./
 
 
-
-# Install Vite globally
-# RUN npm install -g vite
-
 # Install dependencies
 RUN npm install
-
-# RUN npm install -g typescript
 
 
 # Copy the rest of the application code
