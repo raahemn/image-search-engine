@@ -139,6 +139,7 @@ jobs:
           service_account_key: ${{ secrets.GCP_CREDENTIALS }}
 
       - name: Docker Configuration
+        working-directory: ./frontend/image-search
         run: |
             gcloud auth configure-docker us-central1-docker.pkg.dev
 
