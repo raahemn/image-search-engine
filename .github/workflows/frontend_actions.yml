@@ -155,7 +155,7 @@ jobs:
           # docker build -t ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }} .
           # docker push ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
           
-          docker build -t gcr.io/jetrr-raahem-nabeel-1/imsfrontendfinal1:${{ github.sha}} .
+          docker build --platform linux/amd64 -t gcr.io/jetrr-raahem-nabeel-1/imsfrontendfinal1:${{ github.sha}} .
           docker push gcr.io/jetrr-raahem-nabeel-1/imsfrontendfinal1:${{ github.sha}}                             
 
 
