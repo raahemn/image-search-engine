@@ -155,7 +155,7 @@ jobs:
       - name: Build and Push Docker Image
         working-directory: ./frontend/image-search
         run: | 
-          docker buildx build --platform linux/amd64, linux/arm64 -t gcr.io/jetrr-raahem-nabeel-1/imsfrontendfinal1
+          docker buildx build --platform linux/amd64,linux/arm64 -t gcr.io/jetrr-raahem-nabeel-1/imsfrontendfinal1
           :test-git -t gcr.io/jetrr-raahem-nabeel-1/imsfrontendfinal1:test-git:latest --push web-client
           # docker buildx build --platform linux/amd64, linux/arm64 -t gcr.io/jetrr-raahem-nabeel-1/imsfrontendfinal1:test-git .
           # docker push gcr.io/jetrr-raahem-nabeel-1/imsfrontendfinal1:test-git                      
