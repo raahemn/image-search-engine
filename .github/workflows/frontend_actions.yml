@@ -107,8 +107,8 @@ jobs:
           # docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:latest"
 
           
-          docker build -t us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY}}/${{ env.IMAGE}
-          :{{ github.sha} -t us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY}}/${{ env.IMAGE}:latest --push web-client
+          docker build -t us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY}}/${{ env.IMAGE}}
+          :{{ github.sha} -t us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY}}/${{ env.IMAGE}}:latest --push web-client
           
           # latest ./
           # docker push "${{ env.IMAGE_URL }}:latest"
