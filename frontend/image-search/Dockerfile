@@ -7,6 +7,8 @@ WORKDIR /app
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
+RUN npm run build
+
 # Install Vite globally
 # RUN npm install -g vite
 
