@@ -47,6 +47,7 @@ name: Build and Deploy the Frontend to Cloud Run
 on:
   push:
     branches: [ "main" ]
+  workflow_dispatch:
 
 env:
   PROJECT_ID: jetrr-raahem-nabeel-1 # TODO: update Google Cloud project id
@@ -93,6 +94,7 @@ jobs:
           registry: '${{ env.GAR_LOCATION }}-docker.pkg.dev'
 
       - name: Build and Push Container
+        working-directory: ./frontend
         run: |-
           docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}" ./
           docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}"
