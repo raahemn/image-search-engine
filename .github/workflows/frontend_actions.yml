@@ -96,7 +96,7 @@ jobs:
             gcloud auth configure-docker us-central1.pkg.dev
 
       - name: Build and Push Container
-        working-directory: ./frontend
+        working-directory: ./frontend/image-search
         run: |-
           docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}" ./
           docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}"
