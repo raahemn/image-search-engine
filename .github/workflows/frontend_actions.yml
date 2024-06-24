@@ -138,9 +138,9 @@ jobs:
           project_id: ${{ env.PROJECT_ID }}
           service_account_key: ${{ secrets.GCP_CREDENTIALS }}
 
-      - name: Authenticate Docker to Google Cloud Artifact Registry
+      - name: Docker Configuration
         run: |
-          echo ${{ secrets.GCP_CREDENTIALS }} | docker login -u _json_key --password-stdin https://${{ env.GAR_LOCATION }}-docker.pkg.dev
+            gcloud auth configure-docker us-central1-docker.pkg.dev
 
       - name: Build and Push Docker Image
         run: |
