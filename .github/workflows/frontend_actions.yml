@@ -138,6 +138,11 @@ jobs:
           project_id: ${{ env.PROJECT_ID }}
           service_account_key: ${{ secrets.GCP_CREDENTIALS }}
 
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v1  
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
     
       - name: Docker Auth
         run: |
