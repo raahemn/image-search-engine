@@ -16,7 +16,7 @@ WORKDIR /app
 COPY requirements.txt .
 
 #Copy Google Cloud credentials
-COPY application_default_credentials.json /root/.config/gcloud/application_default_credentials.json
+# COPY application_default_credentials.json /root/.config/gcloud/application_default_credentials.json
 
 #Set Project ID
 # ENV GOOGLE_CLOUD_PROJECT=jetrr-raahem-nabeel-1
