@@ -44,14 +44,14 @@ jobs:
       - name: Build and Push Docker Image
         working-directory: ./frontend/image-search
         run: | 
-          docker build --platform linux/amd64 -t ${{env.REPOSITORY}}/${{env.PROJECT_ID}}/${{env.IMAGE}}:${{github.sh}} .
-          docker push ${{env.REPOSITORY}}/${{env.PROJECT_ID}}/${{env.IMAGE}}:${{github.sh}}                  
+          docker build --platform linux/amd64 -t ${{env.REPOSITORY}}/${{env.PROJECT_ID}}/${{env.IMAGE}}:${{github.sha}} .
+          docker push ${{env.REPOSITORY}}/${{env.PROJECT_ID}}/${{env.IMAGE}}:${{github.sha}}                  
 
 
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy ${{env.IMAGE}} \
-            --image ${{env.REPOSITORY}}/${{env.PROJECT_ID}}/${{env.IMAGE}}:${{github.sh}}  \
+            --image ${{env.REPOSITORY}}/${{env.PROJECT_ID}}/${{env.IMAGE}}:${{github.sha}}  \
             --region ${{env.REGION}} \
             --platform managed \
             --allow-unauthenticated \
