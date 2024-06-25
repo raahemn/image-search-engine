@@ -15,14 +15,6 @@ WORKDIR /app
 #Copy the requirements file into the container
 COPY requirements.txt .
 
-#Copy Google Cloud credentials
-# COPY application_default_credentials.json /root/.config/gcloud/application_default_credentials.json
-
-#Set Project ID
-# ENV GOOGLE_CLOUD_PROJECT=jetrr-raahem-nabeel-1
-
-# RUN pip install --upgrade pip setuptools==65.5.0
-
 #Install any dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
