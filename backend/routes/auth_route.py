@@ -29,7 +29,7 @@ def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
 
-#Sign Up Route
+#Sign Up Route 
 @router.post("/signup/")
 async def sign_up(user_data: SignupUser):
     print("Signup request", user_data)
