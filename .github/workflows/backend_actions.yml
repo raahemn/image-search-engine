@@ -7,10 +7,10 @@ on:
   workflow_dispatch:
 
 env:
-  PROJECT_ID: jetrr-raahem-nabeel-1 # TODO: update Google Cloud project id
-  GAR_LOCATION: us-central1 # TODO: update Artifact Registry location
-  SERVICE: imsbackend # TODO: update Cloud Run service name
-  REGION: us-central1 # TODO: update Cloud Run service region
+  PROJECT_ID: jetrr-raahem-nabeel-1 # Google Cloud project id
+  GAR_LOCATION: us-central1 #  Artifact Registry location
+  SERVICE: imsbackend #  Cloud Run service name
+  REGION: us-central1 # Cloud Run service region
   REPOSITORY: gcr.io
   IMAGE_URL: gcr.io/jetrr-raahem-nabeel-1/imsbackend
   IMAGE: imsbackend
@@ -42,15 +42,15 @@ jobs:
       - name: Build and Push Docker Image
         working-directory: ./backend
         run: | 
-          docker build --platform linux/amd64 -t gcr.io/jetrr-raahem-nabeel-1/imsbackend:test-git .
-          docker push gcr.io/jetrr-raahem-nabeel-1/imsbackend:test-git                      
+          docker build --platform linux/amd64 -t ${{ env.REPOSITORY }}/${{ env.PROJECT_ID }}/${{ env.IMAGE }}:${{ github.sha }} .
+          docker push ${{ env.REPOSITORY }}/${{ env.PROJECT_ID }}/${{ env.IMAGE }}:${{ github.sha }}              
 
 
       - name: Deploy to Cloud Run
         run: |
-          gcloud run deploy imsbackend \
-            --image gcr.io/jetrr-raahem-nabeel-1/imsbackend:test-git \
-            --region us-central1 \
+          gcloud run deploy ${{ env.SERVICE }} \
+            --image ${{ env.REPOSITORY }}/${{ env.PROJECT_ID }}/${{ env.IMAGE }}:${{ github.sha }} \
+            --region ${{ env.REGION }} \
             --platform managed \
             --allow-unauthenticated \
             --port=8080
