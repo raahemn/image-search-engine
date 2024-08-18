@@ -9,7 +9,7 @@ import datetime
 from predict_request_gapic import EmbeddingPredictionClient
 
 
-#Initialize Google Cloud Storage client
+#Initialize Google Cloud Storage client 
 storage_client = storage.Client()
 bucket_name = os.getenv("BUCKET_NAME")
 
